@@ -1,13 +1,11 @@
 <?php
 
-
 namespace ChromeHeadless;
 
-
-use ChromeHeadless\Exceptions\EmptyDocument;
-use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
+use Symfony\Component\DomCrawler\Crawler;
+use ChromeHeadless\Exceptions\EmptyDocument;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ChromeHeadless
 {
@@ -35,6 +33,7 @@ class ChromeHeadless
     public function setUrl(string $url)
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -45,6 +44,7 @@ class ChromeHeadless
     public function setTimeout(float $timeout)
     {
         $this->timeout = $timeout;
+
         return $this;
     }
 
@@ -62,12 +62,14 @@ class ChromeHeadless
     public function setChromePath(string $path)
     {
         $this->chrome_path = $path;
+
         return $this;
     }
 
     public function setUserAgent(string $user_agent)
     {
         $this->user_agent = $user_agent;
+
         return $this;
     }
 
@@ -79,6 +81,7 @@ class ChromeHeadless
         $this->makeRequest();
 
         $this->dom = new Crawler($this->html);
+
         return $this->dom;
     }
 
@@ -100,7 +103,7 @@ class ChromeHeadless
         $chrome->setTimeout($this->timeout);
         $chrome->run();
 
-        if (!$chrome->isSuccessful()) {
+        if (! $chrome->isSuccessful()) {
             throw new ProcessFailedException($chrome);
         }
 
@@ -114,8 +117,8 @@ class ChromeHeadless
     {
         $command = [$this->chrome_path, '--headless', '--dump-dom', $this->url];
 
-        if (!empty($this->user_agent)) {
-            array_push($command, '--user-agent="' . $this->user_agent . '"');
+        if (! empty($this->user_agent)) {
+            array_push($command, '--user-agent="'.$this->user_agent.'"');
         }
 
         return $command;

@@ -2,14 +2,13 @@
 
 namespace ChromeHeadless\Test;
 
+use PHPUnit\Framework\TestCase;
 use ChromeHeadless\ChromeHeadless;
 use ChromeHeadless\Exceptions\EmptyDocument;
-use ChromeHeadlessTest;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
-class Test extends TestCase
+class ChromeHeadlessTest extends TestCase
 {
     /** @test */
     public function it_can_get_the_html()
@@ -45,7 +44,7 @@ class Test extends TestCase
             ->setUserAgent($user_agent)
             ->createCommand();
 
-        $this->assertContains('--user-agent="' . $user_agent . '"', $command);
+        $this->assertContains('--user-agent="'.$user_agent.'"', $command);
     }
 
     /** @test */

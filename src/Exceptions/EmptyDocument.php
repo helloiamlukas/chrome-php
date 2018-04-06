@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ChromeHeadless\Exceptions;
 
 use Exception;
