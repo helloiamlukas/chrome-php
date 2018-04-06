@@ -21,7 +21,8 @@ class ChromeHeadlessTest extends TestCase
     public function it_can_get_the_dom()
     {
         $crawler = ChromeHeadless::url('https://example.com')->getDOMCrawler();
-        $this->assertContains('Example Domain', $crawler->filter('body h1')->text());
+        $this->assertContains('Example Domain',
+                              $crawler->filter('body h1')->text());
     }
 
     /** @test */
@@ -29,9 +30,7 @@ class ChromeHeadlessTest extends TestCase
     {
         $this->expectException(ProcessFailedException::class);
 
-        ChromeHeadless::url('https://example.com')
-            ->setChromePath('invalid/chrome/path')
-            ->getHtml();
+        ChromeHeadless::url('https://example.com')->setChromePath('invalid/chrome/path')->getHtml();
     }
 
     /** @test */
@@ -40,9 +39,9 @@ class ChromeHeadlessTest extends TestCase
         $user_agent = 'NiceUserAgent/1.0';
 
         $command = ChromeHeadless::url('https://example.com')
-            ->setChromePath('google-chrome')
-            ->setUserAgent($user_agent)
-            ->createCommand();
+                                 ->setChromePath('google-chrome')
+                                 ->setUserAgent($user_agent)
+                                 ->createCommand();
 
         $this->assertContains('--user-agent="'.$user_agent.'"', $command);
     }
@@ -52,8 +51,7 @@ class ChromeHeadlessTest extends TestCase
     {
         $this->expectException(EmptyDocument::class);
 
-        ChromeHeadless::url('https://www.this-url-does-not-exist-0321980381.com')
-            ->getHtml();
+        ChromeHeadless::url('https://www.this-url-does-not-exist-0321980381.com')->getHtml();
     }
 
     /** @test */
@@ -61,8 +59,6 @@ class ChromeHeadlessTest extends TestCase
     {
         $this->expectException(ProcessTimedOutException::class);
 
-        var_dump(ChromeHeadless::url('https://example.com')
-            ->setTimeout(0.01)
-            ->getHtml());
+        ChromeHeadless::url('https://example.com')->setTimeout(0.01)->getHtml();
     }
 }
