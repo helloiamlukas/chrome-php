@@ -1,0 +1,38 @@
+{
+    "name": "helloiamlukas/chrome-php",
+    "description": "A PHP Wrapper for Chrome Headless. Get the DOM of any webpage.",
+    "homepage": "https://github.com/helloiamlukas/chrome-php",
+    "keywords":
+    [
+        "webpage",
+        "dom",
+        "chrome",
+        "headless"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.1",
+        "symfony/css-selector": "^4.0",
+        "symfony/dom-crawler": "^4.0",
+        "symfony/process": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChromeHeadless\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ChromeHeadless\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
