@@ -10,11 +10,16 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 class ChromeHeadless
 {
     protected $url;
+
     protected $html;
+
     protected $dom;
+
     protected $user_agent;
+
     protected $chrome_path = 'google-chrome';
-    protected $timeout = 10;
+
+    protected $timeout = null;
 
     public function __construct(string $url = '')
     {
@@ -100,7 +105,11 @@ class ChromeHeadless
         $command = $this->createCommand();
 
         $chrome = new Process($command);
-        $chrome->setTimeout($this->timeout);
+
+        if (! is_null($this->timeout)) {
+            $chrome->setTimeout($this->timeout);
+        }
+
         $chrome->run();
 
         if (! $chrome->isSuccessful()) {
