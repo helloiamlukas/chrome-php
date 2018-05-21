@@ -2,6 +2,7 @@
 
 namespace ChromeHeadless;
 
+use ChromeHeadless\Exceptions\CloudflareProtection;
 use Symfony\Component\Process\Process;
 use Symfony\Component\DomCrawler\Crawler;
 use ChromeHeadless\Exceptions\EmptyDocument;
@@ -57,6 +58,10 @@ class ChromeHeadless
     {
         if (strpos($html, '<html><head></head><body></body></html>') !== false) {
             throw new EmptyDocument($this->url);
+        }
+
+        if (strpos($html, 'cf-browser-verification cf-im-under-attack') !== false) {
+            throw new CloudflareProtection($this->url);
         }
 
         $this->html = $html;
