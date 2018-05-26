@@ -2,6 +2,7 @@
 
 namespace ChromeHeadless;
 
+use ChromeHeadless\Exceptions\ChromeException;
 use ChromeHeadless\Exceptions\CloudflareProtection;
 use Symfony\Component\Process\Process;
 use Symfony\Component\DomCrawler\Crawler;
@@ -17,6 +18,12 @@ class ChromeHeadless
     protected $dom;
 
     protected $user_agent;
+
+    protected $viewport;
+
+    protected $headers;
+
+    protected $blacklist = [];
 
     protected $chrome_path = 'google-chrome';
 
@@ -56,12 +63,8 @@ class ChromeHeadless
 
     public function setHtml(string $html)
     {
-        if (strpos($html, '<html><head></head><body></body></html>') !== false) {
-            throw new EmptyDocument($this->url);
-        }
-
-        if (strpos($html, 'cf-browser-verification cf-im-under-attack') !== false) {
-            throw new CloudflareProtection($this->url);
+        if (strpos($html, 'Error:') === 0) {
+            throw new ChromeException($this->url, $html);
         }
 
         $this->html = $html;
@@ -81,6 +84,30 @@ class ChromeHeadless
         $this->user_agent = $user_agent;
 
         return $this;
+    }
+
+    /**
+     * @param mixed $viewport
+     */
+    public function setViewport($viewport)
+    {
+        $this->viewport = $viewport;
+    }
+
+    /**
+     * @param mixed $headers
+     */
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * @param array $blacklist
+     */
+    public function setBlacklist(array $blacklist)
+    {
+        $this->blacklist = $blacklist;
     }
 
     /**
@@ -125,16 +152,38 @@ class ChromeHeadless
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function createCommand()
     {
-        $command = [$this->chrome_path, '--headless', '--dump-dom', $this->url];
+        $options = [
+            'url' => $this->url,
+            'path' => $this->chrome_path,
+        ];
 
         if (! empty($this->user_agent)) {
-            array_push($command, '--user-agent="'.$this->user_agent.'"');
+            $options['userAgent'] = $this->user_agent;
         }
 
-        return $command;
+        if (! empty($this->viewport)) {
+            $options['viewport'] = $this->viewport;
+        }
+
+        if (! empty($this->headers)) {
+            $options['headers'] = $this->headers;
+        }
+
+        if (! empty($this->blacklist)) {
+            $options['blacklist'] = $this->blacklist;
+        }
+
+        $command = [
+            'NODE_PATH=`npm root -g`',
+            'node',
+            __DIR__.'/../bin/chrome.js',
+            escapeshellarg(json_encode($options)),
+        ];
+
+        return implode(' ', $command);
     }
 }
