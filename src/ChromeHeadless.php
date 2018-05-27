@@ -2,11 +2,9 @@
 
 namespace ChromeHeadless;
 
-use ChromeHeadless\Exceptions\ChromeException;
-use ChromeHeadless\Exceptions\CloudflareProtection;
 use Symfony\Component\Process\Process;
 use Symfony\Component\DomCrawler\Crawler;
-use ChromeHeadless\Exceptions\EmptyDocument;
+use ChromeHeadless\Exceptions\ChromeException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ChromeHeadless
