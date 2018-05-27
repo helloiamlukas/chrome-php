@@ -84,8 +84,8 @@ const runChrome = async () => {
         }
         catch (exception) {
             if (browser) await browser.close();
-            console.error(exception);
-            process.exit(1);
+            console.log(exception);
+            process.exit(0);
         }
     }
 ;

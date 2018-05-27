@@ -2,10 +2,10 @@
 
 namespace ChromeHeadless\Test;
 
+use ChromeHeadless\Exceptions\ChromeException;
 use PHPUnit\Framework\TestCase;
 use ChromeHeadless\ChromeHeadless;
 use ChromeHeadless\Exceptions\EmptyDocument;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
 class ChromeHeadlessTest extends TestCase
@@ -31,5 +31,21 @@ class ChromeHeadlessTest extends TestCase
         $this->expectException(ProcessTimedOutException::class);
 
         ChromeHeadless::url('https://example.com')->setTimeout(0.01)->getHtml();
+    }
+
+    /** @test */
+    public function it_can_detect_an_unsuccessful_http_response()
+    {
+        $this->expectException(ChromeException::class);
+
+        ChromeHeadless::url('https://httpstat.us/500')->getHtml();
+    }
+
+    /** @test */
+    public function it_can_detect_a_invalid_request()
+    {
+        $this->expectException(ChromeException::class);
+
+        ChromeHeadless::url('https://thiswebsitedoesnotexistatall912393124.com')->getHtml();
     }
 }
