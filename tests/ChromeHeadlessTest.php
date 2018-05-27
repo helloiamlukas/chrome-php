@@ -2,10 +2,9 @@
 
 namespace ChromeHeadless\Test;
 
-use ChromeHeadless\Exceptions\ChromeException;
 use PHPUnit\Framework\TestCase;
 use ChromeHeadless\ChromeHeadless;
-use ChromeHeadless\Exceptions\EmptyDocument;
+use ChromeHeadless\Exceptions\ChromeException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
 class ChromeHeadlessTest extends TestCase
