@@ -14,6 +14,14 @@ sudo apt-get install -y nodejs gconf-service libasound2 libatk1.0-0 libc6 libcai
 sudo npm install --global --unsafe-perm puppeteer
 sudo chmod -R o+rx /usr/lib/node_modules/puppeteer/.local-chromium
 ```
+## Installation
+
+To add this package to your project, you can install it via composer by running
+
+```bash
+composer require helloiamlukas/chrome-php
+```
+
 ## Usage
 
 Here is a quick example how to use this package:
