@@ -49,11 +49,9 @@ This makes it easy to filter the DOM for specific elements. Check the full docum
 You can specify a timeout after which the process will be killed. The timeout should be given in seconds.
 
 ````````````php
-use ChromeHeadless\ChromeHeadless;
-
-$dom = ChromeHeadless::url('https://example.com')
-    					->setTimeout(10)
-    					->getDOMCrawler();
+ChromeHeadless::url('https://example.com')
+                ->setTimeout(10)
+                ->getDOMCrawler();
 ````````````
 
 If the process runs out of time a `Symfony\Component\Process\Exception\ProcessTimedOutException` will be thrown.
@@ -63,11 +61,9 @@ If the process runs out of time a `Symfony\Component\Process\Exception\ProcessTi
 You can specify a custom path to your Chrome installation.
 
 ```php
-use ChromeHeadless\ChromeHeadless;
-
-$dom = ChromeHeadless::url('https://example.com')
-    					->setChromePath('/path/to/chrome')
-    					->getDOMCrawler();
+ChromeHeadless::url('https://example.com')
+                ->setChromePath('/path/to/chrome')
+                ->getDOMCrawler();
 ```
 
 ### Custom User Agent
@@ -75,11 +71,9 @@ $dom = ChromeHeadless::url('https://example.com')
 You can specify a custom user agent. By default the standard Chrome Headless user agent will be used.
 
 ```php
-use ChromeHeadless\ChromeHeadless;
-
-$dom = ChromeHeadless::url('https://example.com')
-    					->setUserAgent('nice-user-agent')
-    					->getDOMCrawler();
+ChromeHeadless::url('https://example.com')
+                ->setUserAgent('nice-user-agent')
+                ->getDOMCrawler();
 ```
 
 ### Custom Headers
@@ -87,13 +81,11 @@ $dom = ChromeHeadless::url('https://example.com')
 You can specify custom headers which will be used for the request. 
 
 ```php
-use ChromeHeadless\ChromeHeadless;
-
-$dom = ChromeHeadless::url('https://example.com')
-                        ->setHeaders([
-                            'DNT' => 1 // DO NOT TRACK
-                        ])
-    					->getDOMCrawler();
+ChromeHeadless::url('https://example.com')
+                ->setHeaders([
+                    'DNT' => 1 // DO NOT TRACK
+                ])
+                ->getDOMCrawler();
 ```
 
 ### Blacklist
@@ -101,14 +93,12 @@ $dom = ChromeHeadless::url('https://example.com')
 You can specify a list of regular expressions for files that should not be loaded when you request a website. These expressions will be checked against the url of the file.
 
 ```php
-use ChromeHeadless\ChromeHeadless;
-
-$dom = ChromeHeadless::url('https://example.com')
-                        ->setBlacklist([
-                            'www.google-analytics.com',
-                            'analytics.js'
-                        ])
-    					->getDOMCrawler();
+ChromeHeadless::url('https://example.com')
+                ->setBlacklist([
+                    'www.google-analytics.com',
+                    'analytics.js'
+                ])
+                ->getDOMCrawler();
 ```
 
 ### Viewport
@@ -116,14 +106,12 @@ $dom = ChromeHeadless::url('https://example.com')
 You can specify a custom viewport that will be used when you make a request. By default the Chrome Headless standard of 800x600px will be used.
 
 ```php
-use ChromeHeadless\ChromeHeadless;
-
-$dom = ChromeHeadless::url('https://example.com')
-                        ->setViewport([
-                            'width' => 1920,
-                            'height' => 1080
-                        ])
-    					->getDOMCrawler();
+ChromeHeadless::url('https://example.com')
+                ->setViewport([
+                    'width' => 1920,
+                    'height' => 1080
+                ])
+                ->getDOMCrawler();
 ```
 
 ## Testing
